@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 // mui
-import { Button, TextField, Typography, Grid, Container } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Container,
+  Box,
+} from "@mui/material";
 // icons
 import SendIcon from "@mui/icons-material/Send";
 // formik
@@ -71,36 +78,60 @@ const CommentsList = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={12} mb={5}>
+        <Grid item xs={12}>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
             <Form>
-              <div>
-                <div>
-                  <label htmlFor="name">Name</label>
+              <Box component="div" sx={{ my: 3 }}>
+                <div style={{ padding: "5px" }}>
+                  <label htmlFor="name">
+                    <Typography variant="body2" color="text.secondary">
+                      Name
+                    </Typography>
+                  </label>
                 </div>
-                <Field type="text" name="name" placeholder="Name" />
+                <Field id="name" type="text" name="name" placeholder="Name" />
                 <ErrorMessage name="name" component={CustomError} />
-              </div>
+              </Box>
 
-              <div>
-                <div>
-                  <label htmlFor="email">Email</label>
+              <Box component="div" sx={{ my: 3 }}>
+                <div style={{ padding: "5px" }}>
+                  <label htmlFor="email">
+                    <Typography variant="body2" color="text.secondary">
+                      Email
+                    </Typography>
+                  </label>
                 </div>
-                <Field type="text" name="email" placeholder="Email" />
+                <Field
+                  id="email"
+                  type="text"
+                  name="email"
+                  placeholder="Email"
+                />
                 <ErrorMessage name="email" component={CustomError} />
-              </div>
+              </Box>
 
-              <div>
-                <div>
-                  <label htmlFor="comment">Comment</label>
+              <Box component="div" sx={{ my: 3 }}>
+                <div style={{ padding: "5px" }}>
+                  <label htmlFor="comment">
+                    <Typography variant="body2" color="text.secondary">
+                      Comment
+                    </Typography>
+                  </label>
                 </div>
-                <Field type="text" name="comment" placeholder="Comment" />
+                <Field
+                  id="comment"
+                  as="textarea"
+                  type="text"
+                  name="comment"
+                  placeholder="Comment"
+                  rows={5}
+                />
                 <ErrorMessage name="comment" component={CustomError} />
-              </div>
+              </Box>
 
               <Button
                 variant="contained"

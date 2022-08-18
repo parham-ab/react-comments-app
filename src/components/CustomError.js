@@ -1,4 +1,16 @@
+import Typography from "@mui/material/Typography";
+
 const CustomError = ({ children }) => {
-  return <span style={{ color: "#e75353", fontSize: "14px" }}>{children}</span>;
+  return (
+    <div>
+      <Typography
+        variant="caption"
+        color="initial"
+        sx={{ color: "#e75353", fontSize: "14px" }}
+      >
+        {children}
+      </Typography>
+    </div>
+  );
 };
 export default CustomError;

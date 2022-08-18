@@ -34,3 +34,20 @@ body {
 ::-webkit-scrollbar-thumb:active {
   background-color: rgb(207, 207, 207);
 }
+// forms
+input,
+textarea {
+  width: 100%;
+  padding: 7px;
+  font-size: 17px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  resize: none;
+}
+textarea{
+  
+}
+label {
+  font-size: 15px;
+  cursor: pointer;
+}
