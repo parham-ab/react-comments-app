@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // mui
 import {
   Button,
@@ -15,6 +15,7 @@ import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import CustomError from "./CustomError";
+import Comment from "./Comment";
 
 // initial values
 const initialValues = {
@@ -60,6 +61,13 @@ const CommentsList = () => {
     };
     postComments();
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("https://fakestoreapi.com/products");
+      setMainData(response.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Container maxWidth="lg">
@@ -137,7 +145,6 @@ const CommentsList = () => {
                 variant="contained"
                 size="small"
                 endIcon={<SendIcon />}
-                sx={{ mt: 5 }}
                 type="submit"
                 //   endIcon={!loading ? <SendIcon /> : <HourglassTopIcon />}
                 //   disabled={formik.isValidating}
@@ -148,6 +155,10 @@ const CommentsList = () => {
           </Formik>
         </Grid>
       </Grid>
+      {/* display data */}
+      {mainData.map((item) => (
+        <Comment key={item.id} data={item} />
+      ))}
     </Container>
   );
 };
