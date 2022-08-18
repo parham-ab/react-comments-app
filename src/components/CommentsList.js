@@ -1,9 +1,8 @@
 import React from "react";
 // mui
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Button, TextField, Typography, Grid, Container } from "@mui/material";
+// icons
+import SendIcon from "@mui/icons-material/Send";
 
 const CommentsList = () => {
   return (
@@ -27,7 +26,8 @@ const CommentsList = () => {
           <TextField
             sx={{ mt: 3 }}
             id="name"
-            label="name"
+            label="Name"
+            name="name"
             // helperText="Some important text"
             variant="standard"
             fullWidth
@@ -36,7 +36,8 @@ const CommentsList = () => {
           <TextField
             sx={{ mt: 3 }}
             id="email"
-            label="email"
+            label="Email"
+            name="email"
             // helperText="Some important text"
             variant="standard"
             fullWidth
@@ -45,7 +46,8 @@ const CommentsList = () => {
           <TextField
             sx={{ mt: 3 }}
             id="comment"
-            label="comment"
+            label="Comment"
+            name="comment"
             // helperText="Some important text"
             variant="standard"
             fullWidth
@@ -54,6 +56,9 @@ const CommentsList = () => {
             rows={4}
           />
         </Grid>
+        <Button variant="contained" size="small" endIcon={<SendIcon />}>
+          Post
+        </Button>
       </Grid>
     </Container>
   );
