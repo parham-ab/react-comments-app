@@ -43,9 +43,11 @@ textarea {
   border-radius: 8px;
   background-color: #f9f9f9;
   resize: none;
-}
-textarea{
-  
+  transition: all 0.3s;
+  &:focus {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: all 0.3s;
+  }
 }
 label {
   font-size: 15px;

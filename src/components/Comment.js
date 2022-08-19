@@ -1,27 +1,59 @@
 import React, { useEffect, useState } from "react";
-// import { Container } from "@mui/material";
-// -------localstorage, styling, 
-
-
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  IconButton,
+  Typography,
+} from "@mui/material";
+// icons
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const Comment = ({ data, deleteHandle, index }) => {
-  //   const [myData, setMyData] = useState([]);
-
-  //   useEffect(() => {
-  //     data.map((item) => setMyData(item));
-  //     console.log(myData);
-  //   }, []);
-
   const { name, email, comment } = data.values;
 
   return (
-    <div style={{ border: "solid 1px gray", margin: "10px", padding: "10px" }}>
-      <h1>{name}</h1>
-      <h1>{email}</h1>
-      <h1>{comment}</h1>
-      <h1>{data.date}</h1>
-      <button onClick={() => deleteHandle(index)}>delete</button>
-    </div>
+    <Card
+      sx={{
+        minWidth: 275,
+        my: 5,
+        boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+      }}
+    >
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {data.date}
+        </Typography>
+        <Box component="div" display="flex" alignItems="center">
+          <Avatar sx={{ width: 35, height: 35, margin: "0 10px 0 0" }}>
+            <AccountCircleIcon sx={{ fontSize: "37px" }} />
+          </Avatar>
+          <Typography variant="h6" component="div">
+            {name}
+          </Typography>
+        </Box>
+        <Typography variant="caption" color="text.secondary" component="p">
+          {email}
+        </Typography>
+        <Divider />
+        <Typography variant="body2">{comment}</Typography>
+      </CardContent>
+      <CardActions>
+        <IconButton
+          size="small"
+          color="error"
+          variant="contained"
+          onClick={() => deleteHandle(index)}
+        >
+          <DeleteForeverIcon />
+        </IconButton>
+      </CardActions>
+    </Card>
   );
 };
 
