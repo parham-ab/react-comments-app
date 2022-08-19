@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 // mui
@@ -8,6 +7,7 @@ import SendIcon from "@mui/icons-material/Send";
 // components
 import CustomError from "./CustomError";
 import Comment from "./Comment";
+import http from "../services/httpServices";
 // initial values
 const initialValues = {
   name: "",
@@ -50,26 +50,26 @@ const CommentsList = () => {
         minute: "numeric",
       };
       const date = new Date().toLocaleString("en-US", options);
-      const response = await axios.post(
-        "https://jsonplaceholder.typicode.com/posts",
-        { values, date }
-      );
+      const response = await http.post("/posts", { values, date });
       const newValue = [...mainData, response.data];
       setMainData(newValue);
       // save to localStorage
       localStorage.setItem("react-comments-list", JSON.stringify(newValue));
     };
     PostData();
-    // clear input
+    // clear inputs
+    [values].forEach((item) => {
+      item.name = "";
+      item.email = "";
+      item.comment = "";
+    });
   };
   // delete comment
   const deleteHandle = (id) => {
     const filteredData = mainData.filter(
       (item) => mainData.indexOf(item) !== id
     );
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) => setMainData(filteredData));
+    http.delete(`/posts/${id}`).then((res) => setMainData(filteredData));
     localStorage.setItem("react-comments-list", JSON.stringify(filteredData));
   };
   // load comments from localStorage
