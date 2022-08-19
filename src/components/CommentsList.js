@@ -3,11 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 // mui
 import { Button, Typography, Grid, Container, Box } from "@mui/material";
+// icons
 import SendIcon from "@mui/icons-material/Send";
+import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 // components
 import CustomError from "./CustomError";
 import Comment from "./Comment";
 import http from "../services/httpServices";
+import Loading from "./Loading";
 // initial values
 const initialValues = {
   name: "",
@@ -36,8 +39,7 @@ const validationSchema = Yup.object({
 
 const CommentsList = () => {
   const [mainData, setMainData] = useState([]);
-  const [error, setError] = useState("");
-  //   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // submit
   const onSubmit = (values) => {
     const PostData = async () => {
@@ -50,11 +52,13 @@ const CommentsList = () => {
         minute: "numeric",
       };
       const date = new Date().toLocaleString("en-US", options);
+      setIsLoading(true);
       const response = await http.post("/posts", { values, date });
       const newValue = [...mainData, response.data];
       setMainData(newValue);
       // save to localStorage
       localStorage.setItem("react-comments-list", JSON.stringify(newValue));
+      setIsLoading(false);
     };
     PostData();
     // clear inputs
@@ -155,26 +159,30 @@ const CommentsList = () => {
               <Button
                 variant="contained"
                 size="small"
-                endIcon={<SendIcon />}
                 type="submit"
-                //   endIcon={!loading ? <SendIcon /> : <HourglassTopIcon />}
-                //   disabled={formik.isValidating}
+                sx={{ fontWeight: "600" }}
+                endIcon={!isLoading ? <SendIcon /> : <HourglassTopIcon />}
+                disabled={isLoading}
               >
-                Post
+                {!isLoading ? "Post" : "Posting..."}
               </Button>
             </Form>
           </Formik>
         </Grid>
       </Grid>
       {/* display data */}
-      {mainData.map((item, index) => (
-        <Comment
-          key={index}
-          data={item}
-          deleteHandle={deleteHandle}
-          index={index}
-        />
-      ))}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        mainData.map((item, index) => (
+          <Comment
+            key={index}
+            data={item}
+            deleteHandle={deleteHandle}
+            index={index}
+          />
+        ))
+      )}
     </Container>
   );
 };
