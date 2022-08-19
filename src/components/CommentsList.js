@@ -80,7 +80,7 @@ const CommentsList = () => {
   useEffect(() => {
     const savedComments = localStorage.getItem("react-comments-list");
     const parsedSavedComments = JSON.parse(savedComments);
-    setMainData(parsedSavedComments);
+    savedComments != null && setMainData(parsedSavedComments);
   }, []);
 
   return (
