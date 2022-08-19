@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from "react";
-// mui
-import {
-  Button,
-  TextField,
-  Typography,
-  Grid,
-  Container,
-  Box,
-} from "@mui/material";
-// icons
-import SendIcon from "@mui/icons-material/Send";
-// formik
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import * as Yup from "yup";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+// mui
+import { Button, Typography, Grid, Container, Box } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+// components
 import CustomError from "./CustomError";
 import Comment from "./Comment";
-
 // initial values
 const initialValues = {
   name: "",
@@ -45,29 +36,37 @@ const validationSchema = Yup.object({
 const CommentsList = () => {
   const [mainData, setMainData] = useState([]);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  //   const [isLoading, setIsLoading] = useState(false);
   // submit
   const onSubmit = (values) => {
-    setMainData(values);
-    const postComments = async () => {
-      try {
-        await axios.post("https://fakestoreapi.com/products", values);
-        const { data } = await axios.get("https://fakestoreapi.com/products");
-        console.log(data);
-      } catch (err) {
-        setError(err);
-        console.log(error.message);
-      }
+    const PostData = async () => {
+      // date
+      const options = {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const date = new Date().toLocaleString("en-US", options);
+      const response = await axios.post(
+        "https://jsonplaceholder.typicode.com/posts",
+        { values, date }
+      );
+      const newValue = [...mainData, response.data];
+      setMainData(newValue);
     };
-    postComments();
+    PostData();
+    // clear input
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("https://fakestoreapi.com/products");
-      setMainData(response.data);
-    };
-    fetchData();
-  }, []);
+  // delete comment
+  const deleteHandle = (id) => {
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .then((res) =>
+        setMainData(mainData.filter((item) => mainData.indexOf(item) !== id))
+      );
+  };
 
   return (
     <Container maxWidth="lg">
@@ -156,8 +155,13 @@ const CommentsList = () => {
         </Grid>
       </Grid>
       {/* display data */}
-      {mainData.map((item) => (
-        <Comment key={item.id} data={item} />
+      {mainData.map((item, index) => (
+        <Comment
+          key={index}
+          data={item}
+          deleteHandle={deleteHandle}
+          index={index}
+        />
       ))}
     </Container>
   );
