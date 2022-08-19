@@ -55,17 +55,21 @@ const CommentsList = () => {
       );
       const newValue = [...mainData, response.data];
       setMainData(newValue);
+      // save to localStorage
+      localStorage.setItem("react-comments-list", JSON.stringify(newValue));
     };
     PostData();
     // clear input
   };
   // delete comment
   const deleteHandle = (id) => {
+    const filteredData = mainData.filter(
+      (item) => mainData.indexOf(item) !== id
+    );
     axios
       .delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((res) =>
-        setMainData(mainData.filter((item) => mainData.indexOf(item) !== id))
-      );
+      .then((res) => setMainData(filteredData));
+    localStorage.setItem("react-comments-list", JSON.stringify(filteredData));
   };
 
   return (
