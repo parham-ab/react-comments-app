@@ -19,13 +19,14 @@ const validationSchema = Yup.object({
   name: Yup.string()
     .trim()
     .required("Required!")
-    .max(50, "your name can't be more than 50 chars!"),
+    .max(30, "your name can't be more than 30 chars!"),
   email: Yup.string()
     .matches(
       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
       "invalid Email address"
     )
-    .required("Required"),
+    .required("Required")
+    .max(20, "your email can't be more than 20 chars!"),
   comment: Yup.string()
     .trim()
     .min(5, "your comment must be at least 5 or more chars!")

@@ -10,6 +10,7 @@ import {
 // icons
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import MarkunreadIcon from "@mui/icons-material/Markunread";
 
 const Comment = ({ data, deleteHandle, index }) => {
   const { name, email, comment } = data.values;
@@ -38,31 +39,38 @@ const Comment = ({ data, deleteHandle, index }) => {
             variant="contained"
             onClick={() => deleteHandle(index)}
           >
-            <HighlightOffIcon sx={{ fontSize: "25px" }} />
+            <HighlightOffIcon sx={{ fontSize: "23px" }} />
           </IconButton>
         </Box>
         <Box component="div" display="flex" alignItems="center">
-          <Avatar sx={{ width: 35, height: 35, margin: "0 10px 0 0" }}>
-            <AccountCircleIcon sx={{ fontSize: "37px" }} />
-          </Avatar>
+          <AccountCircleIcon
+            sx={{ fontSize: "37px", margin: "0 10px 0 0", color: "#241234" }}
+          />
           <Typography variant="h6" component="p" noWrap>
             {name}
           </Typography>
         </Box>
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          component="p"
-          noWrap
+        <Box
+          component="div"
+          display="flex"
+          alignItems="center"
+          sx={{ ml: "5px" }}
         >
-          {email}
-        </Typography>
+          <MarkunreadIcon
+            sx={{ fontSize: "20px", color: "text.secondary", m: "5px 3px" }}
+          />
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            component="p"
+            noWrap
+          >
+            {email}
+          </Typography>
+        </Box>
         <Divider />
         <Typography variant="body2">{comment}</Typography>
       </CardContent>
-      {/* <CardActions sx={{ backgroundColor: "#dbeafe" }}>
-
-      </CardActions> */}
     </Card>
   );
 };
