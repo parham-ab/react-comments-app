@@ -71,6 +71,12 @@ const CommentsList = () => {
       .then((res) => setMainData(filteredData));
     localStorage.setItem("react-comments-list", JSON.stringify(filteredData));
   };
+  // load comments from localStorage
+  useEffect(() => {
+    const savedComments = localStorage.getItem("react-comments-list");
+    const parsedSavedComments = JSON.parse(savedComments);
+    setMainData(parsedSavedComments);
+  }, []);
 
   return (
     <Container maxWidth="lg">
